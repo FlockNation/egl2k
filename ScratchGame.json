@@ -1,0 +1,45 @@
+{
+  "name": "ScratchGame",
+  "type": "object",
+  "properties": {
+    "game_name": {
+      "type": "string",
+      "description": "Name of the Scratch game"
+    },
+    "game_url": {
+      "type": "string",
+      "description": "URL to the Scratch game"
+    },
+    "game_type": {
+      "type": "string",
+      "enum": [
+        "platformer",
+        "shooter",
+        "puzzle",
+        "racing",
+        "sports",
+        "arcade",
+        "other"
+      ],
+      "description": "Type of game"
+    },
+    "difficulty": {
+      "type": "string",
+      "enum": [
+        "easy",
+        "medium",
+        "hard"
+      ],
+      "default": "medium"
+    },
+    "average_score": {
+      "type": "number",
+      "description": "Average score players get"
+    }
+  },
+  "required": [
+    "game_name",
+    "game_url",
+    "game_type"
+  ]
+}
