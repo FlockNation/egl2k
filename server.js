@@ -49,7 +49,14 @@ if (!leagueState) {
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+
+// Serve frontend from /public
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve index.html for root
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // API: fetch data
 app.get('/api/players', (req, res) => {
@@ -74,7 +81,6 @@ app.post('/api/league/save', (req, res) => {
 
 // Draft endpoints
 app.post('/api/draft/generate-order', (req, res) => {
-  // generate wheel order for rounds 1 & 2
   const teamIds = leagueState.teams.map(t => t.id);
   const randomOrder = sim.shuffleArray(teamIds.slice());
   leagueState.draft.order = randomOrder;
@@ -83,8 +89,7 @@ app.post('/api/draft/generate-order', (req, res) => {
 });
 
 app.post('/api/draft/run-full', (req, res) => {
-  // run full draft: 3 rounds. Assumes some players may be unassigned.
-  const userTeamId = req.body.userTeamId || null; // if provided, include prompt picks on frontend
+  const userTeamId = req.body.userTeamId || null;
   const result = sim.runFullDraft(leagueState, userTeamId);
   leagueState = result.leagueState;
   saveJSON(STATE_FILE, leagueState);
@@ -94,12 +99,14 @@ app.post('/api/draft/run-full', (req, res) => {
 // Quick 1v1 simulate
 app.post('/api/simulate/1v1', (req, res) => {
   const { playerAId, playerBId, gameId } = req.body;
-  if (!playerAId || !playerBId || !gameId) return res.status(400).json({ error: 'missing params' });
+  if (!playerAId || !playerBId || !gameId)
+    return res.status(400).json({ error: 'missing params' });
+
   const result = sim.simulate1v1(leagueState, playerAId, playerBId, gameId);
   res.json(result);
 });
 
-// Generate season schedule (group stage, 5 weeks, one bye per team)
+// Generate season schedule
 app.post('/api/schedule/generate', (req, res) => {
   const weeks = req.body.weeks || leagueState.settings.seasonWeeks || 5;
   const schedule = sim.generateSchedule(leagueState.teams, weeks);
@@ -108,17 +115,19 @@ app.post('/api/schedule/generate', (req, res) => {
   res.json({ schedule });
 });
 
-// Simulate a week (simulate all matches scheduled in that week)
+// Simulate a week
 app.post('/api/schedule/simulate-week', (req, res) => {
   const weekIndex = req.body.weekIndex;
-  if (weekIndex == null) return res.status(400).json({ error: 'missing weekIndex' });
+  if (weekIndex == null)
+    return res.status(400).json({ error: 'missing weekIndex' });
+
   const result = sim.simulateWeek(leagueState, weekIndex);
   leagueState = result.leagueState;
   saveJSON(STATE_FILE, leagueState);
   res.json(result);
 });
 
-// Run full season (simulate all weeks + playoffs)
+// Run full season
 app.post('/api/season/run-full', (req, res) => {
   const result = sim.runFullSeason(leagueState);
   leagueState = result.leagueState;
@@ -126,7 +135,8 @@ app.post('/api/season/run-full', (req, res) => {
   res.json(result);
 });
 
+// Server start
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`EGL 2K Simulator server listening on port ${PORT}`);
 });
