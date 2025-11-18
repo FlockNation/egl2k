@@ -1,0 +1,57 @@
+{
+  "name": "Player",
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "Player's Scratch username"
+    },
+    "tier": {
+      "type": "number",
+      "enum": [
+        1,
+        2,
+        3
+      ],
+      "description": "Player tier (1 = best, 3 = lowest)"
+    },
+    "team_id": {
+      "type": "string",
+      "description": "ID of the team player belongs to, null if free agent"
+    },
+    "contract_years": {
+      "type": "number",
+      "default": 1,
+      "description": "Years remaining on contract"
+    },
+    "is_tradable": {
+      "type": "boolean",
+      "default": true
+    },
+    "has_team_option": {
+      "type": "boolean",
+      "default": false
+    },
+    "has_player_option": {
+      "type": "boolean",
+      "default": false
+    },
+    "total_points": {
+      "type": "number",
+      "default": 0,
+      "description": "Season total points"
+    },
+    "games_played": {
+      "type": "number",
+      "default": 0
+    },
+    "skill_rating": {
+      "type": "number",
+      "description": "Overall skill rating (1-100)"
+    }
+  },
+  "required": [
+    "username",
+    "tier"
+  ]
+}
