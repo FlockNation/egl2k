@@ -1,0 +1,17 @@
+{
+  "id": "initial-league",
+  "players": [],
+  "teams": [],
+  "games": [],
+  "draft": {
+    "order": [],
+    "picks": []
+  },
+  "schedule": [],
+  "standings": {},
+  "playoffs": null,
+  "settings": {
+    "matchMode": "highestSingle",
+    "seasonWeeks": 5
+  }
+}
