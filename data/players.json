@@ -1,0 +1,408 @@
+[
+  {
+    "id": "p_the-pug-of-mars",
+    "username": "The-Pug-Of-Mars",
+    "displayName": "The Pug Of Mars",
+    "tier": 0,
+    "leader": true,
+    "joinDate": "2024-06-01",
+    "teamId": "t_mexico-city-aztecs",
+    "notes": "Leader of Mexico City Aztecs"
+  },
+  {
+    "id": "p_ultmante-vikings-fan",
+    "username": "Ultmante-Vikings-Fan",
+    "displayName": "Ultmante-Vikings-Fan",
+    "tier": 1,
+    "leader": false,
+    "joinDate": "2024-06-05",
+    "teamId": "t_mexico-city-aztecs"
+  },
+  {
+    "id": "p_therealhyperdude",
+    "username": "TheRealHyperDude",
+    "displayName": "TheRealHyperDude",
+    "tier": 2,
+    "leader": false,
+    "joinDate": "2024-06-10",
+    "teamId": "t_mexico-city-aztecs"
+  },
+  {
+    "id": "p_josargyletcss",
+    "username": "josargyletcss",
+    "displayName": "josargyletcss",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-12",
+    "teamId": "t_mexico-city-aztecs"
+  },
+
+  {
+    "id": "p_mysteryman777",
+    "username": "mysteryman777",
+    "displayName": "mysteryman777",
+    "tier": 0,
+    "leader": true,
+    "joinDate": "2024-06-03",
+    "teamId": "t_salt-lake-sandstorms"
+  },
+  {
+    "id": "p_thesoccerdude16",
+    "username": "TheSoccerDude16",
+    "displayName": "TheSoccerDude16",
+    "tier": 1,
+    "leader": false,
+    "joinDate": "2024-06-08",
+    "teamId": "t_salt-lake-sandstorms"
+  },
+  {
+    "id": "p_bengals32",
+    "username": "Bengals32",
+    "displayName": "Bengals32",
+    "tier": 2,
+    "leader": false,
+    "joinDate": "2024-06-09",
+    "teamId": "t_salt-lake-sandstorms"
+  },
+  {
+    "id": "p_coolproductiongames",
+    "username": "CoolProductionGames",
+    "displayName": "CoolProductionGames",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-11",
+    "teamId": "t_salt-lake-sandstorms"
+  },
+
+  {
+    "id": "p_k-man-games",
+    "username": "K-man-games",
+    "displayName": "K-man-games",
+    "tier": 0,
+    "leader": true,
+    "joinDate": "2024-06-04",
+    "teamId": "t_san-antonio-rampage"
+  },
+  {
+    "id": "p_cheetah9919",
+    "username": "Cheetah9919",
+    "displayName": "Cheetah9919",
+    "tier": 1,
+    "leader": false,
+    "joinDate": "2024-06-07",
+    "teamId": "t_san-antonio-rampage",
+    "tradeFlag": {"years":1,"tradable":true,"option":true}
+  },
+  {
+    "id": "p_jcnflgamerJets",
+    "username": "jcnflgamerJets",
+    "displayName": "jcnflgamerJets",
+    "tier": 2,
+    "leader": false,
+    "joinDate": "2024-06-07",
+    "teamId": "t_san-antonio-rampage",
+    "tradeFlag": {"years":1,"tradable":true,"option":true}
+  },
+  {
+    "id": "p_zqro",
+    "username": "Zqro-",
+    "displayName": "Zqro",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-11",
+    "teamId": "t_san-antonio-rampage"
+  },
+
+  {
+    "id": "p_icee_kingsleyyt",
+    "username": "Icee_KingsleyYT",
+    "displayName": "Icee_KingsleyYT",
+    "tier": 0,
+    "leader": true,
+    "joinDate": "2024-06-02",
+    "teamId": "t_san-francisco-strikers"
+  },
+  {
+    "id": "p_superlord1e3",
+    "username": "superlord1e3",
+    "displayName": "superlord1e3",
+    "tier": 1,
+    "leader": false,
+    "joinDate": "2024-06-06",
+    "teamId": "t_san-francisco-strikers",
+    "tradeFlag": {"years":2,"tradable":false}
+  },
+  {
+    "id": "p_electro_night",
+    "username": "Electro_Night",
+    "displayName": "Electro_Night",
+    "tier": 2,
+    "leader": false,
+    "joinDate": "2024-06-09",
+    "teamId": "t_san-francisco-strikers",
+    "tradeFlag": {"years":1,"tradable":true}
+  },
+  {
+    "id": "p_gamingcat2012",
+    "username": "GamingCat2012",
+    "displayName": "GamingCat2012",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-13",
+    "teamId": "t_san-francisco-strikers"
+  },
+
+  {
+    "id": "p_aubietigers",
+    "username": "Aubietigers",
+    "displayName": "Aubietigers",
+    "tier": 0,
+    "leader": true,
+    "joinDate": "2024-06-03",
+    "teamId": "t_washington-wolves"
+  },
+  {
+    "id": "p_phillyfan7_alt",
+    "username": "phillyfan7_Alt",
+    "displayName": "phillyfan7_Alt",
+    "tier": 1,
+    "leader": false,
+    "joinDate": "2024-06-10",
+    "teamId": "t_washington-wolves"
+  },
+  {
+    "id": "p_dominicjohnson65",
+    "username": "DominicJohnson65",
+    "displayName": "DominicJohnson65",
+    "tier": 2,
+    "leader": false,
+    "joinDate": "2024-06-09",
+    "teamId": "t_washington-wolves"
+  },
+  {
+    "id": "p_muricanstonkempire",
+    "username": "MuricanStonkEmpire",
+    "displayName": "MuricanStonkEmpire",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-14",
+    "teamId": "t_washington-wolves"
+  },
+
+  {
+    "id": "p_ytv13",
+    "username": "YTV13",
+    "displayName": "YTV13",
+    "tier": 0,
+    "leader": true,
+    "joinDate": "2024-06-05",
+    "teamId": "t_carolina-buccaneers"
+  },
+  {
+    "id": "p_psulions23",
+    "username": "PSULions23",
+    "displayName": "PSULions23",
+    "tier": 1,
+    "leader": false,
+    "joinDate": "2024-06-10",
+    "teamId": "t_carolina-buccaneers"
+  },
+  {
+    "id": "p_bills88377",
+    "username": "bills88377",
+    "displayName": "bills88377",
+    "tier": 2,
+    "leader": false,
+    "joinDate": "2024-06-11",
+    "teamId": "t_carolina-buccaneers"
+  },
+  {
+    "id": "p_sevhomeac",
+    "username": "SevHomeAc",
+    "displayName": "SevHomeAc",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-12",
+    "teamId": "t_carolina-buccaneers"
+  },
+
+  {
+    "id": "p_marcusmakes222",
+    "username": "marcusmakes222",
+    "displayName": "marcusmakes222",
+    "tier": 0,
+    "leader": true,
+    "joinDate": "2024-06-04",
+    "teamId": "t_cleveland-forests"
+  },
+  {
+    "id": "p_gracecupcakestar",
+    "username": "Gracecupcakestar",
+    "displayName": "Gracecupcakestar",
+    "tier": 1,
+    "leader": false,
+    "joinDate": "2024-06-07",
+    "teamId": "t_cleveland-forests",
+    "tradeFlag": {"years":2,"tradable":true}
+  },
+  {
+    "id": "p_pengui22",
+    "username": "Pengui22",
+    "displayName": "Pengui22",
+    "tier": 2,
+    "leader": false,
+    "joinDate": "2024-06-08",
+    "teamId": "t_cleveland-forests",
+    "tradeFlag": {"years":1,"tradable":true}
+  },
+  {
+    "id": "p_2015sigmaboy",
+    "username": "2015sigmaboy",
+    "displayName": "2015sigmaboy",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-13",
+    "teamId": "t_cleveland-forests"
+  },
+
+  {
+    "id": "p_storm2442",
+    "username": "storm2442",
+    "displayName": "storm2442",
+    "tier": 0,
+    "leader": true,
+    "joinDate": "2024-06-05",
+    "teamId": "t_indiana-fire"
+  },
+  {
+    "id": "p_breakingbyte",
+    "username": "BreakingByte",
+    "displayName": "BreakingByte",
+    "tier": 1,
+    "leader": false,
+    "joinDate": "2024-06-09",
+    "teamId": "t_indiana-fire",
+    "tradeFlag": {"years":1,"tradable":true}
+  },
+  {
+    "id": "p_jags20177gaming",
+    "username": "Jags20177Gaming",
+    "displayName": "Jags20177Gaming",
+    "tier": 1,
+    "leader": false,
+    "joinDate": "2024-06-10",
+    "teamId": "t_indiana-fire"
+  },
+  {
+    "id": "p_stephenw83",
+    "username": "stephenw83",
+    "displayName": "stephenw83",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-12",
+    "teamId": "t_indiana-fire",
+    "tradeFlag": {"years":2,"tradable":true}
+  },
+
+  {
+    "id": "p_azure_apple",
+    "username": "Azure_Apple",
+    "displayName": "Azure_Apple",
+    "tier": 0,
+    "leader": true,
+    "joinDate": "2024-06-02",
+    "teamId": "t_maryland-panthers"
+  },
+  {
+    "id": "p_courageouscobalion",
+    "username": "CourageousCobalion",
+    "displayName": "CourageousCobalion",
+    "tier": 1,
+    "leader": false,
+    "joinDate": "2024-06-08",
+    "teamId": "t_maryland-panthers"
+  },
+  {
+    "id": "p_advikjain20",
+    "username": "advikjain20",
+    "displayName": "advikjain20",
+    "tier": 2,
+    "leader": false,
+    "joinDate": "2024-06-11",
+    "teamId": "t_maryland-panthers"
+  },
+  {
+    "id": "p_itme-kazakstanbrik",
+    "username": "ItMe-KazakstanBrik",
+    "displayName": "ItMe-KazakstanBrik",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-13",
+    "teamId": "t_maryland-panthers"
+  },
+
+  {
+    "id": "p_hallmarkc2029",
+    "username": "hallmarkc2029",
+    "displayName": "hallmarkc2029",
+    "tier": 0,
+    "leader": true,
+    "joinDate": "2024-06-03",
+    "teamId": "t_new-york-giants"
+  },
+  {
+    "id": "p_pbhawks23",
+    "username": "PBHawks23",
+    "displayName": "PBHawks23",
+    "tier": 1,
+    "leader": false,
+    "joinDate": "2024-06-09",
+    "teamId": "t_new-york-giants"
+  },
+  {
+    "id": "p_nea002",
+    "username": "nea002",
+    "displayName": "nea002",
+    "tier": 2,
+    "leader": false,
+    "joinDate": "2024-06-10",
+    "teamId": "t_new-york-giants"
+  },
+  {
+    "id": "p_det_nfl_lions",
+    "username": "det_nfl_lions",
+    "displayName": "det_nfl_lions",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-14",
+    "teamId": "t_new-york-giants"
+  },
+
+  {
+    "id": "p_pokyboy68",
+    "username": "Pokyboy68",
+    "displayName": "Pokyboy68",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-15",
+    "teamId": null
+  },
+  {
+    "id": "p_issiah_daboss",
+    "username": "issiah_daboss",
+    "displayName": "issiah_daboss",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-16",
+    "teamId": null
+  },
+  {
+    "id": "p_theospry",
+    "username": "TheOSpry",
+    "displayName": "TheOSpry",
+    "tier": 3,
+    "leader": false,
+    "joinDate": "2024-06-17",
+    "teamId": null
+  }
+]
