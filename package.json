@@ -1,0 +1,17 @@
+{
+  "name": "egl-2k-simulator-final",
+  "version": "1.0.0",
+  "description": "EGL 2K Simulator - full local app (backend + frontend)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "FlockNation",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "shortid": "^2.2.16"
+  }
+}
