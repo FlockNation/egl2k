@@ -1,0 +1,34 @@
+{
+  "name": "Season",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Season name (e.g., 'Season II')"
+    },
+    "current_week": {
+      "type": "number",
+      "default": 0,
+      "description": "Current week (0 = preseason, 1-5 = regular season, 6+ = playoffs)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "regular_season",
+        "play_in",
+        "playoffs",
+        "finals",
+        "completed"
+      ],
+      "default": "draft"
+    },
+    "champion_team_id": {
+      "type": "string",
+      "description": "Winner of the season"
+    }
+  },
+  "required": [
+    "name"
+  ]
+}
