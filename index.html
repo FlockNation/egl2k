@@ -1,332 +1,71 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8"/>
-  <title>EGL 2K Simulator - Prototype</title>
-  <style>
-    body { font-family: Arial, Helvetica, sans-serif; padding: 18px; max-width: 1100px; margin:auto; }
-    header { display:flex; justify-content:space-between; align-items:center; }
-    .container { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 12px; }
-    .card { border:1px solid #ccc; padding:12px; border-radius:6px; background:#fafafa; }
-    label, select, button { display:block; margin-top:8px; }
-    pre { background:#f2f2f2; padding:12px; border-radius:6px; overflow:auto; }
-    .wide { grid-column: 1 / -1; }
-    small { color:#666; }
-    .btn { padding:8px 12px; margin-top:8px; cursor:pointer; }
-  </style>
+  <meta charset="utf-8">
+  <title>EGL 2K Simulator — Final</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <header>
-    <h1>EGL 2K Simulator (Prototype)</h1>
-    <div>
-      <small>Quick 1v1 & Draft prototype — data in data/*.json</small>
-    </div>
+    <h1>EGL 2K Simulator — Final</h1>
+    <p class="muted">Full draft + franchise + quick 1v1 simulator (local)</p>
   </header>
 
-  <div class="container">
-    <div class="card">
-      <h3>Quick 1v1</h3>
-      <label>Player A:
-        <select id="q_pA"></select>
-      </label>
-      <label>Player B:
-        <select id="q_pB"></select>
-      </label>
-      <label>Game:
-        <select id="q_game"></select>
-      </label>
-      <button id="q_sim" class="btn">Simulate 1v1</button>
-      <pre id="q_out">No simulation yet.</pre>
-    </div>
-
-    <div class="card">
-      <h3>Pick a Franchise (You become leader)</h3>
-      <label>Franchise:
-        <select id="f_team"></select>
-      </label>
-      <button id="f_start" class="btn">Start Draft as Leader</button>
-      <div id="f_info"></div>
-    </div>
-
-    <div class="card wide">
-      <h3>Draft Simulator (3 rounds, tier rules)</h3>
-      <div id="draft_controls">
-        <button id="draft_spin" class="btn">Generate Draft Order (Wheel spin)</button>
-        <div id="draft_order"></div>
+  <main>
+    <section class="card">
+      <h2>Quick 1v1</h2>
+      <div class="row">
+        <label>Player A
+          <select id="q_pA"></select>
+        </label>
+        <label>Player B
+          <select id="q_pB"></select>
+        </label>
+        <label>Game
+          <select id="q_game"></select>
+        </label>
+        <button id="q_sim">Simulate 1v1</button>
       </div>
-      <div id="draft_log" style="margin-top:12px;"></div>
-      <button id="draft_runall" class="btn">Run Full Draft (simulate AIs)</button>
-    </div>
+      <pre id="q_out"></pre>
+    </section>
 
-    <div class="card wide">
-      <h3>Notes & Data</h3>
-      <p>Players come from data/players.json and teams from data/teams.json. Games in data/games.json (replace scratchProjectId with real Scratch IDs).</p>
-      <pre id="data_debug"></pre>
-    </div>
-  </div>
+    <section class="card">
+      <h2>Franchise & Draft</h2>
+      <div class="row">
+        <label>Choose Franchise
+          <select id="f_team"></select>
+        </label>
+        <button id="f_start">Become Leader / Start Draft</button>
+        <button id="d_generate">Generate Draft Order</button>
+        <button id="d_run">Run Full Draft (AI picks)</button>
+      </div>
+      <div id="f_info"></div>
+      <div id="draft_log"></div>
+    </section>
 
-<script>
-/*
-  EGL 2K Simulator - Prototype
-  - Loads data from /data/*.json if available, otherwise uses embedded fallbackData.
-  - Quick 1v1 simulation uses tier-based baseSkill mapping:
-      Tier 1: 92 +/- random
-      Tier 2: 80 +/- random
-      Tier 3: 64 +/- random
-  - Draft simulator:
-      3 rounds:
-        Round1: All tiers available
-        Round2: Tier2 & Tier3 pool
-        Round3: Tier3 only; order sorted by joinDate ascending
-      Each team may have up to one player per tier (leader excluded).
-      AI picks greedily by baseSkill with randomness.
-*/
+    <section class="card">
+      <h2>Season</h2>
+      <div class="row">
+        <label>Weeks <input id="s_weeks" type="number" value="5" min="3" max="10"></label>
+        <button id="s_generate">Generate Schedule</button>
+        <button id="s_runfull">Run Full Season</button>
+      </div>
+      <div id="schedule_view"></div>
+      <div id="standings_view"></div>
+      <div id="playoffs_view"></div>
+    </section>
 
-const DATA_PATHS = ['data/players.json','data/teams.json','data/games.json'];
+    <section class="card">
+      <h2>Admin</h2>
+      <div class="row">
+        <button id="save_state">Save League State</button>
+        <button id="reload_state">Reload League State</button>
+        <button id="export_state">Export JSON</button>
+      </div>
+      <pre id="admin_out"></pre>
+    </section>
+  </main>
 
-let players = [], teams = [], games = [];
-let fallbackData = {
-  players: null, teams: null, games: null
-};
-
-// Embedded fallback uses data embedded inline (so file works when opened directly)
-fallbackData.players = [
-  // minimal small fallback if file fetch fails - but primary data files are provided in repo
-  {"id":"p_demo1","username":"Demo1","displayName":"Demo1","tier":1,"leader":false,"joinDate":"2024-06-01","teamId":null},
-  {"id":"p_demo2","username":"Demo2","displayName":"Demo2","tier":2,"leader":false,"joinDate":"2024-06-02","teamId":null}
-];
-fallbackData.teams = [ {"id":"t_demo","name":"Demo Team","city":"Demo","leaderId":"p_demo1","roster":["p_demo1"]} ];
-fallbackData.games = [ {"id":"g_demo","scratchProjectId":null,"title":"Demo Game","difficulty":5,"weight":1.0} ];
-
-async function loadJSON(path) {
-  try {
-    const res = await fetch(path);
-    if (!res.ok) throw new Error('fetch failed');
-    return await res.json();
-  } catch (e) {
-    return null;
-  }
-}
-
-async function loadAllData() {
-  const p = await loadJSON(DATA_PATHS[0]);
-  const t = await loadJSON(DATA_PATHS[1]);
-  const g = await loadJSON(DATA_PATHS[2]);
-  players = p || fallbackData.players;
-  teams = t || fallbackData.teams;
-  games = g || fallbackData.games;
-  document.getElementById('data_debug').textContent =
-    `Players loaded: ${players.length}\nTeams loaded: ${teams.length}\nGames loaded: ${games.length}\n(If any path failed, a fallback was used - serve via http:// to enable fetch)`;
-  populateSelectors();
-}
-
-function populateSelectors() {
-  const pA = document.getElementById('q_pA');
-  const pB = document.getElementById('q_pB');
-  const gSel = document.getElementById('q_game');
-  const fSel = document.getElementById('f_team');
-
-  [pA,pB].forEach(s => { s.innerHTML = '<option value="">--select--</option>'; });
-  players.forEach(p => {
-    const opt = new Option(p.displayName+" ("+(p.tier===0?'Leader':('Tier '+p.tier))+")", p.id);
-    pA.add(opt.cloneNode(true));
-    pB.add(opt.cloneNode(true));
-  });
-
-  gSel.innerHTML = '';
-  games.forEach(g => gSel.add(new Option(g.title + (g.scratchProjectId ? ` [id:${g.scratchProjectId}]` : ' [id:???]'), g.id)));
-
-  fSel.innerHTML = '<option value="">--choose franchise--</option>';
-  teams.forEach(t => fSel.add(new Option(t.name + ' — ' + t.city, t.id)));
-}
-
-/* Skill / Score model */
-function computeBaseSkill(player) {
-  // leader has no tier => use variant base skill for leader default
-  if (player.tier === 0) {
-    return 70 + (Math.abs(hashCode(player.id)) % 12); // leaders baseline
-  }
-  if (player.tier === 1) return 92 + (Math.abs(hashCode(player.id)) % 6);
-  if (player.tier === 2) return 80 + (Math.abs(hashCode(player.id)) % 8);
-  return 64 + (Math.abs(hashCode(player.id)) % 7); // tier 3
-}
-function hashCode(s){ let h=0; for(let i=0;i<s.length;i++){ h=(h<<5)-h + s.charCodeAt(i); h|=0; } return h; }
-
-function simulatePlayerScore(playerId, gameId) {
-  const player = players.find(p=>p.id===playerId);
-  const game = games.find(g=>g.id===gameId);
-  const base = computeBaseSkill(player);
-  const difficultyModifier = 1 + (game.difficulty - 5) / 20;
-  const noise = 0.85 + Math.random() * 0.3; // variability
-  return Math.round(base * difficultyModifier * (game.weight || 1) * noise);
-}
-
-/* Quick 1v1 handlers */
-document.getElementById('q_sim').addEventListener('click', ()=>{
-  const a = document.getElementById('q_pA').value;
-  const b = document.getElementById('q_pB').value;
-  const g = document.getElementById('q_game').value;
-  if (!a || !b || a===b) { alert('Choose two different players'); return; }
-  const sa = simulatePlayerScore(a,g);
-  const sb = simulatePlayerScore(b,g);
-  const pa = players.find(x=>x.id===a);
-  const pb = players.find(x=>x.id===b);
-  const game = games.find(x=>x.id===g);
-  document.getElementById('q_out').textContent =
-`Game: ${game.title}
-${pa.displayName} (${pa.tier===0?'Leader':'Tier '+pa.tier}) -> ${sa}
-${pb.displayName} (${pb.tier===0?'Leader':'Tier '+pb.tier}) -> ${sb}
-Winner: ${sa>sb ? pa.displayName : (sb>sa ? pb.displayName : 'Tie')}`;
-});
-
-/* Draft simulator */
-let draftOrder = []; // array of team ids
-document.getElementById('draft_spin').addEventListener('click', ()=> {
-  // generate random order for rounds 1 & 2
-  draftOrder = teams.map(t=>t.id).sort(()=>Math.random()-0.5);
-  document.getElementById('draft_order').textContent = 'Draft Order (Rounds 1&2): ' + draftOrder.join(' , ');
-  document.getElementById('draft_log').innerHTML = '';
-});
-
-function teamHasTier(team, tier) {
-  // check current roster in local simulated object
-  const t = teams.find(x=>x.id===team.id || x.id===team);
-  if (!t) return false;
-  const rosterPlayerObjs = (t.roster || []).map(pid => players.find(p=>p.id===pid));
-  return rosterPlayerObjs.some(p => p && p.tier === tier);
-}
-
-function availableCandidatesForTeam(teamId, round) {
-  // Round pool rules:
-  // Round1: all tiers available
-  // Round2: tier2 & tier3
-  // Round3: tier3 only
-  let allowedTiers = [1,2,3];
-  if (round === 2) allowedTiers = [2,3];
-  if (round === 3) allowedTiers = [3];
-  // filter players not assigned to a team
-  const unassigned = players.filter(p => !p.teamId);
-  // pick those whose tier is allowed and team doesn't already have that tier
-  const team = teams.find(t=>t.id===teamId);
-  const candidates = unassigned.filter(p => allowedTiers.includes(p.tier) && !teamHasTier(team,p.tier));
-  return candidates;
-}
-
-function aiPick(teamId, round) {
-  const cands = availableCandidatesForTeam(teamId, round);
-  if (!cands.length) return null;
-  // rank by baseSkill
-  cands.sort((a,b)=> computeBaseSkill(b) - computeBaseSkill(a));
-  // 75% pick best, otherwise random among top3
-  if (Math.random() < 0.75) return cands[0];
-  return cands[Math.min(cands.length-1, Math.floor(Math.random()*Math.min(3,cands.length)))];
-}
-
-function runDraftFull() {
-  if (!draftOrder || !draftOrder.length) {
-    alert('Generate draft order first.');
-    return;
-  }
-  const log = [];
-  // We'll perform 3 rounds. Round 3 order uses teams sorted by earliest joinDate (team leader's joinDate)
-  // compute team joinDates from leader's joinDate
-  const teamJoinSorted = teams.slice().sort((a,b)=> {
-    const la = players.find(p=>p.id===a.leaderId);
-    const lb = players.find(p=>p.id===b.leaderId);
-    return new Date(la.joinDate) - new Date(lb.joinDate);
-  }).map(t=>t.id);
-
-  // copy team roster arrays locally (we will mutate)
-  const teamsBackup = JSON.parse(JSON.stringify(teams));
-
-  for (let round=1; round<=3; round++) {
-    log.push(`--- Round ${round} ---`);
-    let order = (round === 3) ? teamJoinSorted : draftOrder;
-    for (let tid of order) {
-      // If user is the leader selected in UI, allow manual pick; otherwise AI picks
-      const selectedTeam = document.getElementById('f_team').value;
-      const isUserTeam = (selectedTeam === tid);
-      if (isUserTeam) {
-        // present options to user via prompt (simple)
-        const cands = availableCandidatesForTeam(tid, round);
-        if (!cands.length) {
-          log.push(`${getTeamName(tid)}: no available candidates`);
-          continue;
-        }
-        // prepare friendly list with indices
-        let promptText = `Your pick for round ${round}. Available (index:name:tier):\n`;
-        for (let i=0;i<cands.length;i++){
-          promptText += `${i}: ${cands[i].displayName} (Tier ${cands[i].tier})\n`;
-        }
-        promptText += `Enter index to pick, or leave blank to auto-pick:`;
-        const idx = prompt(promptText);
-        let pick = null;
-        if (idx === null || idx.trim() === '') {
-          pick = aiPick(tid, round);
-        } else {
-          const ix = parseInt(idx);
-          if (isNaN(ix) || ix < 0 || ix >= cands.length) pick = aiPick(tid, round);
-          else pick = cands[ix];
-        }
-        if (pick) {
-          assignPlayerToTeam(pick.id, tid);
-          log.push(`${getTeamName(tid)} (YOU) picked ${pick.displayName} (Tier ${pick.tier})`);
-        }
-      } else {
-        const pick = aiPick(tid, round);
-        if (!pick) {
-          log.push(`${getTeamName(tid)}: no candidates`);
-          continue;
-        }
-        assignPlayerToTeam(pick.id, tid);
-        log.push(`${getTeamName(tid)} picked ${pick.displayName} (Tier ${pick.tier})`);
-      }
-    }
-  }
-
-  document.getElementById('draft_log').innerHTML = '<pre>' + log.join('\n') + '</pre>';
-  // restore teams variable in UI to show updated rosters
-  renderTeamInfo(document.getElementById('f_team').value);
-}
-
-function getTeamName(teamId) {
-  const t = teams.find(x=>x.id===teamId);
-  return t ? t.name : teamId;
-}
-
-function assignPlayerToTeam(playerId, teamId) {
-  const p = players.find(x=>x.id===playerId);
-  const t = teams.find(x=>x.id===teamId);
-  if (!p || !t) return;
-  p.teamId = t.id;
-  t.roster = t.roster || [];
-  t.roster.push(p.id);
-}
-
-document.getElementById('draft_runall').addEventListener('click', runDraftFull);
-
-/* Franchise start */
-document.getElementById('f_start').addEventListener('click', ()=>{
-  const tid = document.getElementById('f_team').value;
-  if (!tid) { alert('Choose a franchise to start as leader'); return; }
-  // Set the current user as leader for purposes of local simulation. (No auth — this is prototype)
-  renderTeamInfo(tid);
-});
-
-function renderTeamInfo(teamId) {
-  if (!teamId) { document.getElementById('f_info').innerHTML = ''; return; }
-  const t = teams.find(x=>x.id===teamId);
-  const roster = (t.roster || []).map(id => players.find(p=>p.id===id));
-  let html = `<h4>${t.name} — ${t.city}</h4>`;
-  html += `<p>Leader: ${players.find(p=>p.id===t.leaderId)?.displayName || t.leaderId}</p>`;
-  html += `<p>Roster (${roster.length}):</p><ul>`;
-  roster.forEach(r => { html += `<li>${r.displayName} — ${r.tier===0?'Leader':'Tier '+r.tier}</li>`; });
-  html += `</ul>`;
-  html += `<p><small>Draft notes: Round1 pool = all tiers | Round2 = Tier2 & Tier3 | Round3 = Tier3 only. If you pick outside round tier, it opens vacancy matching your team rules.</small></p>`;
-  document.getElementById('f_info').innerHTML = html;
-}
-
-loadAllData();
-</script>
+  <script src="/app.js"></script>
 </body>
 </html>
