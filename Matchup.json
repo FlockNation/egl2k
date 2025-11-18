@@ -1,0 +1,63 @@
+{
+  "name": "Matchup",
+  "type": "object",
+  "properties": {
+    "week": {
+      "type": "number",
+      "description": "Week number (1-5 regular season)"
+    },
+    "season_id": {
+      "type": "string",
+      "description": "Season ID"
+    },
+    "scratch_game_id": {
+      "type": "string",
+      "description": "ID of Scratch game being played"
+    },
+    "home_team_id": {
+      "type": "string",
+      "description": "Home team ID"
+    },
+    "away_team_id": {
+      "type": "string",
+      "description": "Away team ID"
+    },
+    "home_score": {
+      "type": "number",
+      "description": "Combined home team score"
+    },
+    "away_score": {
+      "type": "number",
+      "description": "Combined away team score"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scheduled",
+        "in_progress",
+        "completed"
+      ],
+      "default": "scheduled"
+    },
+    "player_scores": {
+      "type": "object",
+      "description": "Individual player scores {player_id: score}"
+    },
+    "matchup_type": {
+      "type": "string",
+      "enum": [
+        "regular_season",
+        "play_in",
+        "playoffs",
+        "finals",
+        "third_place"
+      ],
+      "default": "regular_season"
+    }
+  },
+  "required": [
+    "week",
+    "home_team_id",
+    "away_team_id"
+  ]
+}
