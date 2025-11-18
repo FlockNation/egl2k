@@ -1,0 +1,53 @@
+{
+  "name": "Team",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Team name"
+    },
+    "city": {
+      "type": "string",
+      "description": "Team city"
+    },
+    "conference": {
+      "type": "string",
+      "enum": [
+        "Western",
+        "Eastern"
+      ],
+      "description": "Conference the team belongs to"
+    },
+    "leader_name": {
+      "type": "string",
+      "description": "Team leader username"
+    },
+    "wins": {
+      "type": "number",
+      "default": 0
+    },
+    "losses": {
+      "type": "number",
+      "default": 0
+    },
+    "logo_url": {
+      "type": "string",
+      "description": "Team logo URL"
+    },
+    "primary_color": {
+      "type": "string",
+      "default": "#3b82f6"
+    },
+    "is_user_team": {
+      "type": "boolean",
+      "default": false,
+      "description": "Is this the user's franchise team"
+    }
+  },
+  "required": [
+    "name",
+    "city",
+    "conference",
+    "leader_name"
+  ]
+}
